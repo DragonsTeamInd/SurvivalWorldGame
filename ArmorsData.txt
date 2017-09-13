@@ -1,1 +1,6 @@
 0
+# It is amount of armors
+# Here will be dicts with  #armors data
+#Example:
+# defens=3,image='/image.png' 
+# ........
