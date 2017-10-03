@@ -3,7 +3,7 @@ import info as inf
 from pygame.locals import *
 import random
 import threading
-class Animation(q):
+class Animation():
     def openAnimation(self,slf,Img,images,rsr,folder,rng):
         for i in range(rng):
             if i == 0:
