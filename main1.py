@@ -1,4 +1,5 @@
 import pygame
+import Trees as Tr
 import Armor as Arm
 import Player as P
 import Window as Win
@@ -68,7 +69,7 @@ if __name__ == '__main__':
         for event in pygame.event.get():
             if event.type == QUIT:
                 print(MPlayer.alive)
-                Txt.savedata(MPlayerParametrs,'PlayerParametrs.txt')
+                Txt.savedata(MPlayer.PlayerParametrs,'PlayerParametrs.txt')
                 AS.savearmor(MGroups.Armors)
                 inf.running = False
             if MPlayer.alive == True:
