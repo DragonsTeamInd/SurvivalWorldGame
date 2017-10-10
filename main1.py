@@ -8,7 +8,6 @@ import MainsFuncs as MaF
 import Field as F
 import Animation as Anim
 import GroundBlock as GB
-import Trees as Tr
 import info as inf
 import Grass as G
 import Menu as M

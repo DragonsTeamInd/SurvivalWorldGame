@@ -3,8 +3,6 @@ import info as inf
 import Groups
 import copy
 from Armor import Armor
-from Walls import Walls
-from Doors import Doors
 from MeeleWeapon import MeeleWeapon
 from pygame import *
 class CraftBlocks(pygame.sprite.Sprite):
