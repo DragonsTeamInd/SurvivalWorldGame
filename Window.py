@@ -5,7 +5,7 @@ import random
 class Window():
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((inf.screenwidth,inf.screenheight))
+        self.screen = pygame.display.set_mode((inf.screenwidth,inf.screenheight),FULLSCREEN)
         self.imagesDoN = []
         self.imagesDoN.append(pygame.image.load("Images/Backgrounds/Day.png").convert_alpha())
         self.imagesDoN.append(pygame.image.load("Images/Backgrounds/Night2.png").convert_alpha())
