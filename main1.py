@@ -29,7 +29,7 @@ import Resourses as Rs
 import Talants as Tls
 import TalantsWindow as TlW
 import DataSave_And_DataOpen as Txt
-import ArmorSaver as AS
+import ArmorDataSaver as AS
 import Loading as LoD
 from pygame.locals import *
 import random
