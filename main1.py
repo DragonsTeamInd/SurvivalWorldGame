@@ -31,6 +31,7 @@ import Talants as Tls
 import TalantsWindow as TlW
 import DataSave_And_DataOpen as Txt
 import ArmorSaver as AS
+import Loading as LoD
 from pygame.locals import *
 import random
 if __name__ == '__main__':
@@ -62,8 +63,7 @@ if __name__ == '__main__':
     MCursour = CS.Cursour()
     MHUD = H.HUD()
     MEIS = EIS.EquipedItemsSector()
-    Txt.opendata('PlayerParametrs.txt',MPlayer.PlayerParametrs)
-    AS.openarmor(MGroups.Armors,Arm.Armor)
+    MLoading = LoD.Loading(MAnim.openAnimation)
     while inf.running:
         MWindow.Rendering(MGroups.all_sprites,MPlayer,MGroups.grs,MAnim.AnimPlay,MGroups.ground1)
         for event in pygame.event.get():
@@ -98,9 +98,9 @@ if __name__ == '__main__':
             MH.updateall(MPlayer,MTime.update,MWindow.screen,pressed_keys,MGroups.ground1,MGroups.ground,MCursour,MQchr.updateAll)
             if inf.CG == True:
                 MWindow.RenderingLoading(inf.CG)
-                images = []
-                MAnim.openAnimation(1,'00',images,'.png','images/Loading/',20)
-                MAnim.ThreadPlay((images,1,MWindow.screen))
+                MAnim.ThreadPlay((MLoading.images,MLoading.speed,MWindow.screen))
+                Txt.opendata('PlayerParametrs.txt',MPlayer.PlayerParametrs)
+                AS.openarmor(MGroups.Armors,Arm.Armor)
                 MCraft.CreateCraftWindow(MGroups.craftblocks,MGroups,MAnim.openAnimation)
                 MF.CreateGround(MGroups.all_sprites,GB.GroundBlock,MGroups.ground,MGroups.ground1)
                 MF.BuildTrees(MGroups.ground1,Tr.Trees,MGroups.treess,MGroups.all_sprites)
@@ -126,4 +126,3 @@ if __name__ == '__main__':
             MHUD.update(MPlayer,MWindow.screen)
             pygame.display.flip()
             inf.fpsclock.tick(10000)
-                             
