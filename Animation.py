@@ -18,7 +18,7 @@ class Animation():
         slf.image = images[slf.index // speed]
     def LoadingPlay(self,images,speed,screen):
         index = 0
-        while inf.CG == True:
+        while inf.Create_Field == True:
             index += 1
             if index >= len(images) * speed:
                 index = 0
