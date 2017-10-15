@@ -7,7 +7,7 @@ class Groups():
       self.doors = []
       self.doors1 = pygame.sprite.Group()
       self.ground = pygame.sprite.Group()
-      self.ground1 = pygame.sprite.Group()
+      self.ground1 = []
       self.wall = []
       self.wall1 = pygame.sprite.Group()
       self.treess = pygame.sprite.Group()

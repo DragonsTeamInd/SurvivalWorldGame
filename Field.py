@@ -11,56 +11,54 @@ class Field():
         self.SoundFon = Sound.Sound('Sounds\FonMusic223.ogg',-1,0.06)
         self.rect = 1
         self.rect1 = 1
-    def RandomBlockY(self,block):
+    def RandomBlockY(self):
+        Ground_Block_First_Position = inf.Ground_Block_First_Position
         if not self.Q == self.QMax and not self.Q == 0:
             if random.randint(0,100) >= 60:
                 if random.randint(0,100) < self.Q:
-                      self.JFE += block.rect.height
+                      self.JFE += inf.Ground_Block_Height
                       self.Q += inf.chanse
-                      block.rect.top += self.JFE
+                      Ground_Block_First_Position += self.JFE
                 else:
-                      self.JFE -= block.rect.height
+                      self.JFE -= inf.Ground_Block_Height
                       self.Q -= inf.chanse
-                      block.rect.top += self.JFE
+                      Ground_Block_First_Position += self.JFE
             else:
-                block.rect.top += self.JFE
+                Ground_Block_First_Position += self.JFE
         else:
             self.Q = 50
-            block.rect.top += self.JFE
-        print(self.JFE)
-        print(self.Q)
-    def CreateGround(self,als,GroundBlock,gr,gr1):
-        for i in range(inf.height // inf.GBW + 1):
-            new_block = GroundBlock()
-            new_block.rect.left = new_block.rect.width * inf.a
-            self.RandomBlockY(new_block)
-            gr.add(new_block)
-            gr1.add(new_block)
-            als.add(new_block)
-            inf.a += 1
-    def BuildTrees(self,ground1,Trees,treess,all_sprites):
+            Ground_Block_First_Position += self.JFE
+        return Ground_Block_First_Position
+    def CreateGround(self,als,GroundBlock,gr,AllGroundRects):
+        for i in range(inf.WorldSizeInPXL // inf.Ground_Block_Width + 1):
+            new_rect = []
+            new_rect.append(inf.Ground_Block_Width * inf.Created_Ground_Block_Number)
+            new_rect.append(self.RandomBlockY())
+            AllGroundRects.append(new_rect)
+            inf.Created_Ground_Block_Number += 1
+    def BuildTrees(self,AllGroundRects,Trees,treess,all_sprites):
         a = random.randint(inf.TreeNChaseb , inf.TreeNChasef)
         c = 0
-        for i in ground1:
+        for i in AllGroundRects:
             if a > 0 and c == 40:
                 if random.randint(inf.TreeChaseb , inf.TreeChasef) >= inf.TreeChase:
                     new_tree = Trees()
-                    new_tree.rect.left = i.rect.left - new_tree.rect.width // 2
-                    new_tree.rect.top = i.rect.top - new_tree.rect.height
+                    new_tree.rect.left = i[0] - new_tree.rect.width // 2
+                    new_tree.rect.top = i[1] - new_tree.rect.height
                     treess.add(new_tree)
                     all_sprites.add(new_tree)
                     a -= 1
                     c = 0
             else:
                 c += 5
-    def BuildGrass(self,ground1,Grass,al,grs,openAnimation):
+    def BuildGrass(self,AllGroundRects,Grass,al,grs,openAnimation):
         a = random.randint(inf.GrassNChaseb , inf.GrassNChasef)
-        for i in ground1:
+        for i in AllGroundRects:
                 if a > 0:
                     if random.randint(inf.GrassChaseb , inf.GrassChasef) >= inf.GrassChase:
                         new_grass = Grass(openAnimation)
-                        new_grass.rect.left = i.rect.left
-                        new_grass.rect.top = i.rect.top - new_grass.rect.height
+                        new_grass.rect.left = i[0]
+                        new_grass.rect.top = i[1]
                         al.add(new_grass)
                         grs.add(new_grass)
                         a -= 1
@@ -76,9 +74,9 @@ class Field():
         self.RenderTrees(all_sprites,treess,gr1,Trees)
         self.RenderGrass(all_sprites,grs,gr1,Grass,openAnimation)
     def RenderGround(self,all_sprites,ground,gr1,GroundBlock,player,treess,Trees,grs,Grass,openAnimation):
-        print(player.left)
+        '''print(player.left)
         if player.left < (inf.screenwidth * 2 - (inf.screenwidth * 2) // 3) * (self.rect - 1):
-            inf.a -= (inf.screenwidth * 2 // inf.GBW + 1) * 1.5
+            inf.Created_Ground_Block_Number -= (inf.screenwidth * 2 // inf.Ground_Block_Width + 1) * 1.5
             self.rect -= 1
             for gr in gr1:
                 gr.kill()
@@ -90,7 +88,7 @@ class Field():
             self.RenderAll(all_sprites,treess,gr1,Trees,grs,Grass,openAnimation)
         elif player.left > (inf.screenwidth * 2 - (inf.screenwidth * 2) // 3) * self.rect:
             self.rect += 1
-            inf.a -= ((inf.screenwidth * 2 - inf.screenwidth // 30) // inf.GBW + 1)
+            inf.Created_Ground_Block_Number -= ((inf.screenwidth * 2 - inf.screenwidth // 30) // inf.Ground_Block_Width + 1)
             for gr in gr1:
                 gr.kill()
             print('Mnogo')
@@ -98,10 +96,14 @@ class Field():
             inf.CreateEnemy = True
             player.rect.move_ip(0,-200)
             self.CreateGround(all_sprites,GroundBlock,ground,gr1)
-            self.RenderAll(all_sprites,treess,gr1,Trees,grs,Grass,openAnimation)
-    def Plus(self,all_sprites,step):
+            self.RenderAll(all_sprites,treess,gr1,Trees,grs,Grass,openAnimation)'''
+    def Plus(self,all_sprites,OnePlayerStep_inPXL,AllGroundRects):
         for i in all_sprites:
-            i.rect.left += step
-    def Minus(self,all_sprites,step):
+            i.rect.left += OnePlayerStep_inPXL
+        for j in AllGroundRects:
+            j[0] += OnePlayerStep_inPXL
+    def Minus(self,all_sprites,OnePlayerStep_inPXL,AllGroundRects):
         for i in all_sprites:
-            i.rect.left -= step
+            i.rect.left -= OnePlayerStep_inPXL
+        for j in AllGroundRects:
+            j[0] -= OnePlayerStep_inPXL
