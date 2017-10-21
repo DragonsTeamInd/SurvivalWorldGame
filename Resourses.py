@@ -7,8 +7,8 @@ class Resourses():
         self.Resourses = []
         self.woodis = False
     def updateC(self):
-        if inf.woods > 0 and self.woodis == False:
-            new_resourse = Resours('-W',inf.woods,'','WoodItem','wood')
+        if inf.WoodResourse > 0 and self.woodis == False:
+            new_resourse = Resours('-W',inf.WoodResours,'','WoodItem','wood')
             self.Resourses.append(new_resourse)
             self.woodis = True
     def updateR(self):
