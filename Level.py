@@ -19,7 +19,7 @@ class PlayersLevel():
         screen.blit(self.image,(x,y))
         x = self.rect.left + 4
         y = self.rect.top + 4
-        for i in range(inf.PlayerExpirence//(self.levelcost // 100)):
+        for i in range(inf.PlayerExpirence // (self.levelcost // 100)):
             screen.blit(self.miniimage,(x + (i * 3),y))
         if inf.PlayerExpirence >= self.levelcost and not self.level >= self.maxlevel:
             self.level_up()
