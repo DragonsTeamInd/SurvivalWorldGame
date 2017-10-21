@@ -5,14 +5,14 @@ import random
 class Window():
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((inf.screenwidth,inf.screenheight))
+        self.screen = pygame.display.set_mode((inf.screenwidth,inf.screenheight),FULLSCREEN)
         self.imagesDoN = []
         self.imagesDoN.append(pygame.image.load("Images/Backgrounds/Day.png").convert_alpha())
         self.imagesDoN.append(pygame.image.load("Images/Backgrounds/Night2.png").convert_alpha())
         self.image = self.imagesDoN[0]
         self.bck = pygame.image.load("Images\Backgrounds\BG2.png")
         self.Gen = pygame.image.load("Images\Backgrounds\Gen.png")
-        self.imageb = pygame.image.load('Images\Ground\GB.png')
+        self.imageb = pygame.image.load('Images\Ground\GroundPillow.png')
         self.dead = pygame.image.load("Images\Backgrounds\Dead.png").convert_alpha()
         self.index = 0
         self.bck = pygame.transform.scale(self.bck,(inf.screenwidth,inf.screenheight))
@@ -22,14 +22,11 @@ class Window():
         self.imagesDoN[1] =pygame.transform.scale(self.imagesDoN[1],(inf.screenwidth,inf.screenheight))
     def Rendering(self,all_sprites,player,grs,AnimPlay,gr1):
         if player.alive == True:
-            if inf.Crft == False:
+            if inf.IsCraftWindowIsOpen == False:
                 if not inf.blithome == True:
                     self.screen.blit(self.bck,[0,0])
-                    for g in gr1:
-                        y = inf.GBH
-                        for i in range((inf.screenheight - g.rect.top) // inf.GGBH + 1):
-                            self.screen.blit(self.imageb,(g.rect.left,g.rect.top + y))
-                            y += inf.GGBH
+                    for i in gr1:
+                        self.screen.blit(self.imageb,i)
                     for i in grs:
                         i.update(AnimPlay)
                     for en in all_sprites:

@@ -3,8 +3,6 @@ import info as inf
 import Groups
 import copy
 from Armor import Armor
-from Walls import Walls
-from Doors import Doors
 from MeeleWeapon import MeeleWeapon
 from pygame import *
 class CraftBlocks(pygame.sprite.Sprite):
@@ -36,7 +34,7 @@ class CraftBlocks(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.craft = False
     def update(self,Mouse,Groups,event,screen,Resourses):
-        if inf.Crft == True:
+        if inf.IsCraftWindowIsOpen == True:
             if pygame.sprite.collide_rect(self,Mouse):
                 screen.blit(self.Selectedimage,self.rect)
                 if event.type == MOUSEBUTTONDOWN:
@@ -53,5 +51,5 @@ class CraftBlocks(pygame.sprite.Sprite):
                         if self.AiAL == True:
                             Groups.all_sprites.add(new_item)
                         self.Group.append(new_item)
-                        inf.Crft = False
+                        inf.IsCraftWindowIsOpen = False
                         self.craft = False

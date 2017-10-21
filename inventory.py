@@ -4,8 +4,8 @@ import inventoryBlock as invb
 from pygame import *
 class Inventory():
     def __init__(self):
-        self.size = [['-'] * inf.InventoryW for i in range(inf.InventoryH)]
-        self.sizecopy = [['-'] * inf.InventoryW for i in range(inf.InventoryH)]
+        self.size = [['-'] * inf.Inventory_Width for i in range(inf.Inventory_Height)]
+        self.sizecopy = [['-'] * inf.Inventory_Width for i in range(inf.Inventory_Height)]
         self.buttonimage = pygame.image.load('Images/Inventory/chest.gif')
         self.EQPblItems = []
         self.open = False
@@ -80,10 +80,10 @@ class Inventory():
             if stolbm == '-A':
                 for Armor in Armors:
                     if Armor.ininventory == True and Armor.icoininventory == True:
-                        inf.Txtnum += 1
-                        self.InventoryBlockMaker(Armor.ico,stroka,stolb,invblocks,'-FA' + str(inf.Txtnum),strokam,'EquipblItem',Armor)
+                        inf.ArmorID += 1
+                        self.InventoryBlockMaker(Armor.ico,stroka,stolb,invblocks,'-FA' + str(inf.ArmorID),strokam,'EquipblItem',Armor)
                         Armor.icoininventory = False
-                        Armor.id = inf.Txtnum
+                        Armor.id = inf.ArmorID
                         stolb += 1
                         break
             for Armor in Armors:
@@ -101,10 +101,10 @@ class Inventory():
             if stolbm == '-MW':
                 for MW in MeeleWeapon:
                     if MW.ininventory == True and MW.icoininventory == True:
-                        inf.TxtnumMW += 1
-                        self.InventoryBlockMaker(MW.ico,stroka,stolb,invblocks,'-FMW' + str(inf.TxtnumMW),strokam,'EquipblItem',MW)
+                        inf.MeeleWeaponID += 1
+                        self.InventoryBlockMaker(MW.ico,stroka,stolb,invblocks,'-FMW' + str(inf.MeeleWeaponID),strokam,'EquipblItem',MW)
                         MW.icoininventory = False
-                        MW.id = inf.TxtnumMW
+                        MW.id = inf.MeeleWeaponID
                         stolb += 1
                         break
             for MW in MeeleWeapon:
@@ -129,7 +129,7 @@ class Inventory():
                 stolb += 1
             stroka += 1
     def deleteivnblocks(self,invblock):
-        if len(invblock) > inf.InventoryW * inf.InventoryH:
+        if len(invblock) > inf.Inventory_Width * inf.Inventory_Height:
             for block in invblock:
                 block.kill()
                 break

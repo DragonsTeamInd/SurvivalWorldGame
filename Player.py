@@ -60,31 +60,32 @@ class Player(pygame.sprite.Sprite):
             self.alive = False
         if self.alive == True:
             for gr1 in ground1:
-                if pygame.sprite.collide_rect(self,gr1):
+                rect = pygame.Rect(tuple(gr1),(inf.Ground_Block_Width,inf.Ground_Block_Height_For_Rect_Collide))
+                if rect.colliderect(self.rect):
                     self.OG = True
                     break
                 else:
                     self.OG = False
-            if pygame.sprite.spritecollide(self,ground1,False):
-                for gt in ground1:
-                    if pygame.sprite.collide_rect(self,gt):
-                        if gt.rect.top - self.rect.top <= self.rect.height - gt.rect.height:
-                            if self.rect.left > gt.rect.left:
-                                 if pressed_keys[K_LEFT]:
-                                     self.rect.top -= 72
-                                     AnimPlay(self,self.Wimages,self.AnimSpeed)
-                                     self.walksound.playsound()
-                                 if pressed_keys[K_RIGHT]:
-                                     AnimPlay(self,self.WimagesT,self.AnimSpeed)
-                                     self.walksound.playsound()
-                            elif self.rect.left < gt.rect.left:
-                                  if pressed_keys[K_RIGHT]:
-                                      self.rect.top -= 72
-                                      AnimPlay(self,self.WimagesT,self.AnimSpeed)
-                                      self.walksound.playsound()
-                                  if pressed_keys[K_LEFT]:
-                                      AnimPlay(self,self.Wimages,self.AnimSpeed)
-                                      self.walksound.playsound()
+            for gt in ground1:
+                rect1 = pygame.Rect(gt,(inf.Ground_Block_Width,inf.Ground_Block_Height_For_Rect_Collide))
+                if self.rect.colliderect(rect1):
+                    if gt[1] - self.rect.top <= self.rect.height - inf.Ground_Block_Height:
+                        if self.rect.left > gt[0]:
+                             if pressed_keys[K_LEFT]:
+                                 self.rect.top -= 18
+                                 AnimPlay(self,self.Wimages,self.AnimSpeed)
+                                 self.walksound.playsound()
+                             if pressed_keys[K_RIGHT]:
+                                 AnimPlay(self,self.WimagesT,self.AnimSpeed)
+                                 self.walksound.playsound()
+                        elif self.rect.left < gt[0]:
+                              if pressed_keys[K_RIGHT]:
+                                  self.rect.top -= 18
+                                  AnimPlay(self,self.WimagesT,self.AnimSpeed)
+                                  self.walksound.playsound()
+                              if pressed_keys[K_LEFT]:
+                                  AnimPlay(self,self.Wimages,self.AnimSpeed)
+                                  self.walksound.playsound()
             if pressed_keys[K_LEFT]:
                 if not self.speed >= self.maxspeed:
                     self.speed += 1
@@ -101,7 +102,7 @@ class Player(pygame.sprite.Sprite):
                     self.left -= self.speed
                 AnimPlay(self,self.WimagesT,self.WalkAnimSpeed)
                 if not inf.blithome == True:
-                    Plus(all_sprites,self.speed)
+                    Plus(all_sprites,self.speed,ground1)
                 self.walksound.playsound()
                 self.stay = False
                 self.Leftside = True
@@ -121,7 +122,7 @@ class Player(pygame.sprite.Sprite):
                      self.left += self.speed
                  AnimPlay(self,self.Wimages,self.WalkAnimSpeed)
                  if not inf.blithome == True:
-                     Minus(all_sprites,self.speed)
+                     Minus(all_sprites,self.speed,ground1)
                  self.stay = False
                  self.walksound.playsound()
                  self.Leftside = False

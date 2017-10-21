@@ -41,27 +41,27 @@ class Enemy(pygame.sprite.Sprite):
                 self.kill()
             a = player.rect.left - self.rect.left
             b = self.rect.left - player.rect.left
-            if pygame.sprite.spritecollide(self,ground1,False):
-                self.OG = True
-            else:
-                self.OG = False
-            if pygame.sprite.spritecollide(self,ground1,False):
-                for gt in ground1:
-                    if pygame.sprite.collide_rect(self,gt):
-                        if gt.rect.top - self.rect.top <= 32:
-                            if self.rect.left > gt.rect.left:
-                                if a > 0 and a <= self.AttakDistanse:
-                                    pass
-                                elif b > 0 and b <= self.AttakDistanse:
-                                    if not pygame.sprite.collide_rect(self,player):
-                                        self.rect.move_ip(0, -16)
-                            elif self.rect.left < gt.rect.left:
-                                  if a > 0 and a <= self.AttakDistanse:
-                                      if not pygame.sprite.collide_rect(self,player):
-                                          self.rect.move_ip(0, -16)
-                                  elif b > 0 and b <= self.AttakDistanse:
-                                      if not pygame.sprite.collide_rect(self,player):
-                                          pass
+            for i in ground1:
+                rect = pygame.Rect(tuple(i),(inf.Ground_Block_Width,inf.Ground_Block_Height))
+                if self.rect.colliderect(rect):
+                    self.OG = True
+                else:
+                    self.OG = False
+                if self.rect.colliderect(rect):
+                    if i[1] - self.rect.top <= 32:
+                        if self.rect.left > i[0]:
+                            if a > 0 and a <= self.AttakDistanse:
+                                pass
+                            elif b > 0 and b <= self.AttakDistanse:
+                                if not pygame.sprite.collide_rect(self,player):
+                                    self.rect.move_ip(0, -16)
+                        elif self.rect.left < i[0]:
+                              if a > 0 and a <= self.AttakDistanse:
+                                  if not pygame.sprite.collide_rect(self,player):
+                                      self.rect.move_ip(0, -16)
+                              elif b > 0 and b <= self.AttakDistanse:
+                                  if not pygame.sprite.collide_rect(self,player):
+                                      pass
             if a > 0 and a <= self.AttakDistanse:
                 if not pygame.sprite.collide_rect(self,player):
                     self.rect.move_ip(self.speed, 0)

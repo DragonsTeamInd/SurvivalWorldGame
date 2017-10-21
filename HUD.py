@@ -14,4 +14,4 @@ class HUD():
         y = self.rect.top + 90
         for i in range(self.Health):
             screen.blit(self.miniimage,(x + (i * 2),y))
-            screen.blit(self.image,self.rect)
+        screen.blit(self.image,self.rect)
