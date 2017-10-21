@@ -57,22 +57,31 @@ if __name__ == '__main__':
     MGroups.all_sprites.add(MPlayer)
     MMenu = M.Menu()
     MInv = Inv.Inventory()
-    MMenu.menu(MWindow.screen)
+    MCursour = CS.Cursour()
+    MMenu.menu(MWindow.screen,MCursour)
     MF.SoundFon.playsound()
     MSpawner = SpwEnm.SpawnEnemy()
-    MCursour = CS.Cursour()
     MHUD = H.HUD()
     MEIS = EIS.EquipedItemsSector()
     MLoading = LoD.Loading(MAnim.openAnimation)
-    while inf.running:
+    while inf.Work:
         MWindow.Rendering(MGroups.all_sprites,MPlayer,MGroups.grs,MAnim.AnimPlay,MGroups.ground1)
         for event in pygame.event.get():
             if event.type == QUIT:
                 print(MPlayer.alive)
                 Txt.savedata(MPlayer.PlayerParametrs,'PlayerParametrs.txt')
                 AS.savearmor(MGroups.Armors)
-                inf.running = False
+                inf.Work = False
             if MPlayer.alive == True:
+                if event.type == ME.eventcreate(2000):
+                    MInv.updateR(MRS.Resourses)
+                    MInv.updateArmor(MGroups.Armors)
+                    MInv.updateMeeleWeapon(MGroups.MeeleWeapon)
+                    MInv.MakeInv(MGroups.InvBlocks2,MGroups.Armors,MGroups.MeeleWeapon,MRS.Resourses)
+                    MTlW.update(MTls.talants,pressed_keys,MWindow.screen)
+                    MInv.update(MGroups.InvBlocks2,MWindow.screen)
+                    MRS.updateR()
+                    MRS.updateC()
                 if event.type == pygame.MOUSEBUTTONUP:
                     for MeeleWeapon in MGroups.MeeleWeapon:
                         MeeleWeapon.Attak(MGroups.zombies,MPlayer)
@@ -85,19 +94,11 @@ if __name__ == '__main__':
                 MWindow.dayornight(event,ME.oneminute,MAnim.AnimPlay)
         if MPlayer.alive == True:
             pressed_keys = pygame.key.get_pressed()
-            MTlW.update(MTls.talants,pressed_keys,MWindow.screen)
-            MInv.update(MGroups.InvBlocks2,MWindow.screen)
-            MPlayer.update(pressed_keys,MGroups.ground,MGroups.wall,MAnim.AnimPlay,MGroups.all_sprites,MF.Plus,MF.Minus,MGroups.doors)
-            MRS.updateR()
-            MRS.updateC()
-            MInv.updateR(MRS.Resourses)
-            MInv.updateArmor(MGroups.Armors)
-            MInv.updateMeeleWeapon(MGroups.MeeleWeapon)
-            MInv.MakeInv(MGroups.InvBlocks2,MGroups.Armors,MGroups.MeeleWeapon,MRS.Resourses)
+            MPlayer.update(pressed_keys,MGroups.ground1,MGroups.wall,MAnim.AnimPlay,MGroups.all_sprites,MF.Plus,MF.Minus,MGroups.doors)
             MEIS.EquipListBlit(MGroups.Armors,MWindow.screen,MGroups.MeeleWeapon)
             MH.updateall(MPlayer,MTime.update,MWindow.screen,pressed_keys,MGroups.ground1,MGroups.ground,MCursour,MQchr.updateAll)
-            if inf.CG == True:
-                MWindow.RenderingLoading(inf.CG)
+            if inf.Create_Field == True:
+                MWindow.RenderingLoading(inf.Create_Field)
                 MAnim.ThreadPlay((MLoading.images,MLoading.speed,MWindow.screen))
                 Txt.opendata('PlayerParametrs.txt',MPlayer.PlayerParametrs)
                 AS.openarmor(MGroups.Armors,Arm.Armor)
@@ -108,7 +109,7 @@ if __name__ == '__main__':
                 MPS.SpawnOnGround(MGroups.ground1,MPlayer)
                 MQM.QuestCreate(MGroups.quests)
                 MTls.CreateTalants()
-                inf.CG = False
+                inf.Create_Field = False
             MCursour.update()
             MTls.update(MPlayer)
             MInv.updatepressitems(MGroups.InvBlocks2,MWindow.screen,MGroups.Armors,pressed_keys)
@@ -125,4 +126,4 @@ if __name__ == '__main__':
             MQL.update(pressed_keys,MWindow.screen,MGroups.quests)
             MHUD.update(MPlayer,MWindow.screen)
             pygame.display.flip()
-            inf.fpsclock.tick(10000)
+            inf.FrameSpeedController.tick(100)
