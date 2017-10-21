@@ -1,6 +1,6 @@
 0
 # It is amount of armors
-# Here will be dicts with  #armors data
-#Example:
-# defens=3,image='/image.png' 
-# ........
+#Here will be keys for dict with
+#armors data
+#Example
+#LeatherArmor
